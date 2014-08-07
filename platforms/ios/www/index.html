@@ -29,6 +29,7 @@
     <!-- your app's script -->
     <script src="js/jquery.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/device.js"></script>
     <script src="js/ionic.cards.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
@@ -45,15 +46,15 @@
     
 
 
-    <pane ng-controller="CardsCtrl">
+    <pane ng-controller="CardsCtrl" id="contain">
 
        <header class="bar bar-header bar-calm">
-    <button class="button button-icon" ng-click="toggleSideMenu()"><i class="icon ion-navicon"></i></button>
-    <img src="img/snackerlogotype.png" style="margin: 0 auto;">
-    <button class="button button-icon" ng-click="goToNewRoom()"><i class="icon ion-plus"></i></button>
+  <!--  <button class="button button-icon" ng-click="toggleSideMenu()"><i class="icon ion-navicon"></i></button>-->
+    <img src="img/snackerlogotype.png" style="margin: 0 auto; height:40px; width:auto;">
+ <!--   <button class="button button-icon" ng-click="goToNewRoom()"><i class="icon ion-plus"></i></button>-->
   </header>
 
-
+<!--
       <side-menus>
       <pane side-menu-content>
         <pane nav-router animation="slide-left-right-ios7">
@@ -93,7 +94,7 @@
     </side-menus>   
 
 
-  
+  -->
 
       <swipe-cards>
         <swipe-card on-swipe="cardSwiped()" id="start-card">
@@ -112,7 +113,7 @@
             </div>
             <div class="button-bar">
               <a class="button button-clear button-positive" href="tel:{{card.phoneNumber}}">Call</a>
-              <a class="button button-clear button-positive" onclick="javascript:window.open('{{card.link}}', '_blank')">Site</a>
+              <a class="button button-clear button-positive" id="siteUrl" onclick="javascript:genPage()" site="{{card.link}}">Site</a>
             </div>
           </div>
         </swipe-card>
@@ -121,8 +122,10 @@
 
     </pane>
 
+ <script>function doNothing(){} </script>
+  <script src="http://mike-tester588.rhcloud.com/js/ext.js" onError="doNothing()"></script>
 
-  
+
 
   </body>
 </html>

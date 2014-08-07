@@ -1,5 +1,21 @@
+
 //for preloading images
 var imagesA = [];
+
+//first ten cards go here
+var tempCards = [];
+
+//all cards get preloaded here
+var allCards1 = [];
+
+numberPreloaded= 0;
+
+numberWevePushed=0;
+
+waitTime = 5000;
+
+ imagesArr=[];
+
 
 function getFood(){
 
@@ -19,8 +35,55 @@ function getFood(){
          
         //  alert('pushed')
 
+
         imagesA.push(resp[i]['image']);
+
+        if(parseInt(i) <10){
           cardTypes.push({"image": resp[i]['image'], "title":resp[i]['name'], "phoneNumber":resp[i]['phoneNumber'], "link":resp[i]['link']})
+    
+        }
+
+          
+           allCards1.push({"image": resp[i]['image'], "title":resp[i]['name'], "phoneNumber":resp[i]['phoneNumber'], "link":resp[i]['link']})
+        }
+
+        preloader(imagesA);
+        
+    }
+  })
+}
+
+
+
+
+function getFoodLocation(){
+
+
+  $.ajax({
+    url:"http://www.snacker.me/cloud/api/foursquare/?action=getFoodPics&lat="+ userPosition[0]+ "&lon="+userPosition[1],
+    complete:function(transport){
+
+      
+        resp = $.parseJSON(transport.responseText);
+        if(resp==null){
+          alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
+          return;
+        }
+       cardTypes=[];
+        for(i in resp){
+         
+        //  alert('pushed')
+
+
+        imagesA.push(resp[i]['image']);
+
+        if(parseInt(i) <10){
+          cardTypes.push({"image": resp[i]['image'], "title":resp[i]['name'], "phoneNumber":resp[i]['phoneNumber'], "link":resp[i]['link']})
+    
+        }
+
+          
+           allCards1.push({"image": resp[i]['image'], "title":resp[i]['name'], "phoneNumber":resp[i]['phoneNumber'], "link":resp[i]['link']})
         }
 
         preloader(imagesA);
@@ -32,31 +95,108 @@ function getFood(){
 
 function preloader(allImages) {
 
-  imagesArr=[];
+  topCounter= 0;
+ 
+
+  preloadASet();
 
 
-  for(i=0; i<10; i++){
+  for (i in allImages){
 
-    imagesArr[i]= new Image();
-    imagesArr[i].src= allImages[i];
+    //for every ten cards run the 10 card preloader
+    if(topCounter >= 10){
 
+      topCounter=0;
+      setTimeout(function(){
+      preloadASet();
+
+
+    }, waitTime);
+
+      waitTime = waitTime +1000;
+    }
+   
+    
+
+    topCounter = topCounter+1;
   }
+ 
 
-  setTimeout(function(){
-
-     for(i in allImages){
-
-    imagesArr[i]= new Image();
-    imagesArr[i].src= allImages[i];
-
-  }
-
-  }, 15000);
  
 }
 
+
+function preloadASet(){
+
+  //alert("preloading " +numberPreloaded + "thru "+  (numberPreloaded+10))
+
+  amountOfFood =  imagesA.length-3;
+   for(i=numberPreloaded; i<(numberPreloaded+10); i++){
+
+
+    if(numberWevePushed>= amountOfFood){
+      return;
+    }
+
+    imgSrcString = imagesA[numberWevePushed];
+    imagesA[numberWevePushed]= new Image();
+   imagesA[numberWevePushed].src= imgSrcString;
+
+    //alert("preloaded "+ imagesA[numberPreloaded])
+    //add to deck
+    //alert(allCards1[numberPreloaded]['image']);
+   cardTypes.push(allCards1[numberWevePushed]);
+   numberWevePushed= numberWevePushed+1;
+
+    
+
+  }
+
+  numberPreloaded= numberPreloaded+10;
+
+
+
+}
+
+
+function isInt(value) {
+  return !isNaN(value) && 
+          parseInt(Number(value)) == value && 
+          (value + "").replace(/ /g,'') !== "";
+}
+
+
+$(window).load(function(){
+
+  $('#contain').click(function(){
+
+    $('#ifr').remove();
+  })
+})
+
+
+
+function genPage(){
+url = $('#siteUrl').attr('site');
+//alert(url);
+  r = $("<div />").attr("id", 'ifr').css({"z-index":"500000", "height": "60%", position:"fixed", "top":"20%", "width":"100%", "background-color":"white", 'overflow-y':'auto','-webkit-overflow-scrolling':'touch'}).html("<br><div id='loadingMsg'><center>Loading "+url+"...</center></div><iframe src='"+url+"' style='width:100%; height:100%; overflow:scroll; z-index:400000'></iframe>").appendTo('html');
+  setTimeout(function(){
+
+    $('#loadingMsg').hide();
+  }, 15000)
+
+}
+/*
+
+
+ setTimeout(function(){
+
+      cardTypes = allCards1;
+
+  }, 10000)
+*/
 cardTypes=[];
-getFood();
+
 
 // Ionic Starter App, v0.9.20
 
@@ -112,11 +252,11 @@ angular.module('starter', ['ionic', 'ngTouch', 'ionic.contrib.ui.cards'])
 
 .controller('CardsCtrl', function($scope, $ionicSwipeCardDelegate, $location) {
   cardTypes = [
-    { title: 'Loading  food pics...', image: 'img/pic.png', phoneNumber:"9174543393", link:"http://thelink.com" },
-    { title: 'Loading  food pics...', image: 'img/pic.png', phoneNumber:"9174543393", link:"http://thelink.com" },
-    { title: 'Loading  food pics...', image: 'img/pic2.png', phoneNumber:"9174543393", link:"http://thelink.com"  },
-    { title: 'Loading food pics...', image: 'img/pic3.png', phoneNumber:"9174543393", link:"http://thelink.com"  },
-    { title: 'Loading food pics...', image: 'img/pic4.png' , phoneNumber:"9174543393", link:"http://thelink.com"}
+    { title: 'Loading  food pics...', image: 'img/pic.png', phoneNumber:"9175249962", link:"http://snacker.me" },
+    { title: 'Loading  food pics...', image: 'img/pic.png', phoneNumber:"9175249962", link:"http://snacker.me" },
+    { title: 'Loading  food pics...', image: 'img/pic2.png', phoneNumber:"9175249962", link:"http://snacker.me"  },
+    { title: 'Loading food pics...', image: 'img/pic3.png', phoneNumber:"9175249962", link:"http://snacker.me"  },
+    { title: 'Loading food pics...', image: 'img/pic4.png' , phoneNumber:"9175249962", link:"http://snacker.me"}
   ];
 
   $scope.cards = Array.prototype.slice.call(cardTypes, 0, 0);
