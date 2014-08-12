@@ -27,7 +27,7 @@ function getFood(){
       
         resp = $.parseJSON(transport.responseText);
         if(resp==null){
-          alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
+          // alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
           return;
         }
        cardTypes=[];
@@ -66,7 +66,7 @@ function getFoodLocation(){
       
         resp = $.parseJSON(transport.responseText);
         if(resp==null){
-          alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
+          // alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
           return;
         }
        //cardTypes=[];
