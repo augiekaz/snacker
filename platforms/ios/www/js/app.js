@@ -54,7 +54,7 @@ function getFood(){
 }
 
 
-
+cardTypes=[];
 
 function getFoodLocation(){
 
@@ -69,7 +69,7 @@ function getFoodLocation(){
           alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
           return;
         }
-       cardTypes=[];
+       //cardTypes=[];
         for(i in resp){
          
         //  alert('pushed')
@@ -113,7 +113,7 @@ function preloader(allImages) {
 
     }, waitTime);
 
-      waitTime = waitTime +1000;
+      waitTime = waitTime +2000;
     }
    
     
