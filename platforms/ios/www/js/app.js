@@ -12,6 +12,13 @@ numberPreloaded= 0;
 
 numberWevePushed=0;
 
+//cards in deck
+cardTypes=[];
+
+gotFoodTimes = 0;
+
+
+
 waitTime = 5000;
 
  imagesArr=[];
@@ -30,11 +37,17 @@ function getFood(){
           // alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
           return;
         }
-       cardTypes=[];
+      
         for(i in resp){
          
         //  alert('pushed')
 
+
+         if(gotFoodTimes==0){
+
+          cardTypes=[];
+          gotFoodTimes = gotFoodTimes+1;
+        }
 
         imagesA.push(resp[i]['image']);
 
@@ -54,10 +67,14 @@ function getFood(){
 }
 
 
-cardTypes=[];
 
 function getFoodLocation(){
 
+  if(gotFoodTimes==0){
+
+    cardTypes=[];
+    gotFoodTimes = gotFoodTimes+1;
+  }
 
   $.ajax({
     url:"http://www.snacker.me/cloud/api/foursquare/?action=getFoodPics&lat="+ userPosition[0]+ "&lon="+userPosition[1],
