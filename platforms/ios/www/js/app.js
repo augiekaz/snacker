@@ -70,12 +70,7 @@ function getFood(){
 
 function getFoodLocation(){
 
-  if(gotFoodTimes==0){
-
-    cardTypes=[];
-    gotFoodTimes = gotFoodTimes+1;
-  }
-
+  
   $.ajax({
     url:"http://www.snacker.me/cloud/api/foursquare/?action=getFoodPics&lat="+ userPosition[0]+ "&lon="+userPosition[1],
     complete:function(transport){
@@ -86,6 +81,13 @@ function getFoodLocation(){
           // alert("Please run this from snacker.me or simulator/iPhone to view food nearby");
           return;
         }
+
+        if(gotFoodTimes==0){
+
+        cardTypes=[];
+        gotFoodTimes = gotFoodTimes+1;
+        }
+
        //cardTypes=[];
         for(i in resp){
          
